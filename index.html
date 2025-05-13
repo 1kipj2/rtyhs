@@ -1,8 +1,27 @@
 <?php
 session_start();
 
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header("Location: dashboard.php");
+// Tablica użytkowników (login => hasło)
+$users = array(
+    "GIYDSKASTGHJX" => "tajnehaslo1",
+    "wolciax" => "DJHSJHDE"
+);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Sprawdzenie poprawności loginu i hasła
+    if (array_key_exists($username, $users) && $users[$username] === $password) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        echo "Nieprawidłowy login lub hasło.";
+    }
+} else {
+    header("Location: index.php");
     exit;
 }
 ?>
