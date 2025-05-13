@@ -12,18 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (array_key_exists($username, $users) && $users[$username] === $password) {
+if ($username === '1234' && $password === '1234') {
+        session_start();
         $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        
         header("Location: dashboard.php");
-        exit;    } else {
-        echo "Invalid auth key.";
+        exit();
+    } else {
+        echo "Nieprawidłowa nazwa użytkownika lub hasło.";
     }
-} else {
-    header("Location: index.php");
-    exit; 
 }
-?>
 
 
